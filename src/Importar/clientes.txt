@@ -1,0 +1,2 @@
+Cliente [runCliente=1, nombreCliente=1, apellidoCliente=1, aniosCliente=1, nombreCategoria=Activo]
+Cliente [runCliente=2, nombreCliente=2, apellidoCliente=2, aniosCliente=2, nombreCategoria=Activo]

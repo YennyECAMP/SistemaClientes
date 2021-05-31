@@ -72,7 +72,6 @@ public class Menu {
 				break;
 			case 4:	
 				importarDatos();
-
 				break;
 			case 5:
 				exportarDatos();
@@ -243,12 +242,12 @@ public class Menu {
 		System.out.println("---------Cargar Datos en Windows---------------");
 		System.out.println();
 		System.out.println("Ingresa la ruta en donde se encuentra el archivo DBClientes.csv:");
-		
+		sc.nextLine();
 		String rutaDir = sc.nextLine();		
 
 		System.out.println("----------------------------------------");
 		ArchivoServicio archivoServicio = new ArchivoServicio();
-		archivoServicio.cargarDatos(fileName1);
+		archivoServicio.cargarDatos(rutaDir + "/" + fileName1);
 		System.out.println("Datos cargados correctamente en la lista");
 		Utilidad.stopAndContinue();
 	}
@@ -273,17 +272,19 @@ public class Menu {
 		switch (opcionExportar) {
 		case 1://csv
 			System.out.println("Ingresa la ruta en donde desea exportar el archivo clientes.csv:");
+			sc.nextLine();
 			rutaDir = sc.nextLine();
 			ExportadorCsv exportarCsv = new ExportadorCsv();
 			exportarCsv.Exportar(rutaDir + "/" + "clientes.csv", clienteServicio.getListaClientes());
-			System.out.println("Datos de clientes exportados correctamente en formato csv.");
+			//System.out.println("Datos de clientes exportados correctamente en formato csv.");
 			break;	
 		case 2://txt
 			System.out.println("Ingresa la ruta en donde desea exportar el archivo clientes.txt:");
+			sc.nextLine();
 			rutaDir = sc.nextLine();
 			ExportadorTxt exportarTxt = new ExportadorTxt();
-			exportarTxt.Exportar(rutaDir + "/" + "clientes.csv", clienteServicio.getListaClientes());
-			System.out.println("Datos de clientes exportados correctamente en formato txt.");
+			exportarTxt.Exportar(rutaDir + "/" + "clientes.txt", clienteServicio.getListaClientes());
+			//System.out.println("Datos de clientes exportados correctamente en formato txt.");
 			break;		
 		default:
 			System.out.println("Usted marco una opción incorrecta");
