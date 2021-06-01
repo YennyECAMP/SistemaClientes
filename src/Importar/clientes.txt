@@ -1,2 +1,4 @@
-Cliente [runCliente=1, nombreCliente=1, apellidoCliente=1, aniosCliente=1, nombreCategoria=Activo]
-Cliente [runCliente=2, nombreCliente=2, apellidoCliente=2, aniosCliente=2, nombreCategoria=Activo]
+Cliente [runCliente=1, nombreCliente=yy, apellidoCliente=1, aniosCliente=5, nombreCategoria=Activo]
+Cliente [runCliente=17.162.856-5, nombreCliente=Iron, apellidoCliente=Manjar, aniosCliente=1, nombreCategoria=Activo]
+Cliente [runCliente=10.513.821-6, nombreCliente=Thor, apellidoCliente=Tita , aniosCliente=4, nombreCategoria=Activo]
+Cliente [runCliente=17.151.677-8, nombreCliente=Capitán, apellidoCliente=Marraqueta, aniosCliente=9, nombreCategoria=Inactivo]

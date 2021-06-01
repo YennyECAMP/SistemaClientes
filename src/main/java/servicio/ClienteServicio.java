@@ -1,33 +1,39 @@
 package servicio;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import modelo.CategoriaEnum;
 import modelo.Cliente;
 import utilidades.Utilidad;
 
+//Clase ClienteServicio
 public class ClienteServicio {
+	
 	//Atributos
-	private ArrayList<Cliente> listaClientes;
+	private List<Cliente> listaClientes;
 
 	//Constructor
 	public ClienteServicio() {
 	}
 	
-	public ClienteServicio(ArrayList<Cliente> listaClientes) {
+	public ClienteServicio(List<Cliente> listaClientes) {
 		this.listaClientes = new ArrayList<>();
 	}
 
 	//Métodos getters y setters
-	public ArrayList<Cliente> getListaClientes() {
+	public List<Cliente> getListaClientes() {
 		return this.listaClientes;
 	}
 
-	public void setListaClientes(ArrayList<Cliente> listaClientes) {
+	public void setListaClientes(List<Cliente> listaClientes) {
 		this.listaClientes = listaClientes;
 	}
 
 	//Métodos particulares de la clase
+	
 	public void listarClientes() {
+		//Método para listar en consola los clientes registrados
 		int control = 0;
 		if (listaClientes != null) {
 			for (Cliente cliente : listaClientes) {
@@ -42,7 +48,6 @@ public class ClienteServicio {
 			}
 			if (control == 0) {
 				System.out.println("No hay clientes a listar");
-				//Utilidad.stopAndContinue();
 			}			
 		} else {
 			System.out.println( "No se han podido listar los clientes, aún no hay carga datos" );
@@ -50,26 +55,34 @@ public class ClienteServicio {
 		Utilidad.stopAndContinue();		
 	}
 	
-	public void agregarCliente(String runCliente, String nombreCliente, String apellidoCliente, int aniosCliente) {
-		//Se instancia y crea el cliente, la categoría será Activo al crearlo
-		Cliente cliente = new Cliente(runCliente, nombreCliente, apellidoCliente, aniosCliente, CategoriaEnum.Activo);
-		if (listaClientes != null) {
-			listaClientes.add(cliente);
-			System.out.println("Registro insertado " + cliente.toString());
-		} else {
-			System.out.println( "El Cliente el cual usted está agregando viene nulo");
-		}
-	}
-	
-	public void editarCliente(String runCliente, String nombreCliente, String apellidoCliente, int aniosCliente, CategoriaEnum nombreCategoria) {
+	public void agregarCliente(String runCliente, String nombreCliente, String apellidoCliente, int aniosCliente, CategoriaEnum estado) {
+		//Método para ingresar nuevos clientes. la categoría será Activo al crearlo
 		
-
+		//if(!runCliente.isEmpty() && !apellidoCliente.isEmpty() && aniosCliente >=0 && estado != null) { //se condiciona que losc ampos no vengan null
+			/*if(listaClientes.contains(runCliente)) {
+				System.out.println("El cliente Existe");
+			}*/
+			Cliente cliente = new Cliente(runCliente, nombreCliente, apellidoCliente, aniosCliente, estado); //Se instancia y crea el cliente.
+			if (listaClientes != null) {
+				listaClientes.add(cliente);
+				System.out.println("Registro insertado, " + cliente.toString());
+			} else {
+				System.out.println( "El Cliente el cual usted está agregando viene nulo");
+			}
+		/*}else {
+			System.out.println( "Debe asignarle valores a todos los datos del Cliente ");
+		}*/
 	}
-	
-	/*public void editarCategoria(CategoriaEnum nombreCategoria) {
-		
 
-	}*/	
+	public void editarCliente(Cliente cliente, String runCliente, String nombreCliente, String apellidoCliente, int aniosCliente, CategoriaEnum estado) {
+		//método para editar datos del cliente
+		
+		if (!runCliente.isEmpty()) cliente.setRunCliente(runCliente);
+		if (!nombreCliente.isEmpty()) cliente.setNombreCliente(nombreCliente);
+		if (!apellidoCliente.isEmpty())cliente.setApellidoCliente(apellidoCliente);
+		if (aniosCliente >= 0) cliente.setAniosCliente(aniosCliente);
+		if (estado != null) cliente.setNombreCategoria(estado);
+	}	
 
 
 }

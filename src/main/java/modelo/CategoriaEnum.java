@@ -1,5 +1,5 @@
 package modelo;
-
+//Clase enum para los valores de la categoría del cliente
 public enum CategoriaEnum {
-	Activo, Inactivo
+	ACTIVO, INACTIVO
 }

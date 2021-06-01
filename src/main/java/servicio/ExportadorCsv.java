@@ -8,6 +8,7 @@ import java.util.List;
 
 import modelo.Cliente;
 
+//Clase ExportadorCsv exporta a .csv hereda de Exportador
 public class ExportadorCsv extends Exportador {
 
 	@Override

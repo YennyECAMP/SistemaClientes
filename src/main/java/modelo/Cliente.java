@@ -1,5 +1,7 @@
 package modelo;
 
+//Clase Cliente
+
 public class Cliente {
 	//Atributos
 	private String runCliente;
@@ -64,8 +66,8 @@ public class Cliente {
 	//Método toString
 	@Override
 	public String toString() {
-		return "Cliente [runCliente=" + this.runCliente + ", nombreCliente=" + this.nombreCliente + ", apellidoCliente="
-				+ this.apellidoCliente + ", aniosCliente=" + this.aniosCliente + ", nombreCategoria=" + this.nombreCategoria + "]";
+		return "Cliente: Run=" + this.runCliente + ", Nombre=" + this.nombreCliente + ", Apellido="
+				+ this.apellidoCliente + ", Años=" + this.aniosCliente + ", Estatus/Categoria=" + this.nombreCategoria + ".";
 	}
 	
 }

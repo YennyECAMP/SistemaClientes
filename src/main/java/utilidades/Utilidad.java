@@ -1,5 +1,6 @@
 package utilidades;
 
+//Clase Utilidad, sus métodos son estáticos para no instanciar su clase
 public class Utilidad {
 	public static void stopAndContinue() {
 		timeToWait();

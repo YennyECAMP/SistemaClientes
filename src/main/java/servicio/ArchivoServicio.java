@@ -9,14 +9,14 @@ import java.util.List;
 import modelo.CategoriaEnum;
 import modelo.Cliente;
 
+//Clase ArchivoServicio hereda de Exportador
 public class ArchivoServicio extends Exportador {
 
-public List<Cliente> cargarDatos(String fileName1) {
-		
+public void cargarDatos(String fileName1, ClienteServicio clienteServicio) {
+		//método para importar datos desde el archivo .csv
 		String[] listaClientes;
-		ArrayList<Cliente> listado = new ArrayList<Cliente>();
-		//String filePath = "src/main/java/utilidades/";//ojo borrar esta línea antes de entregar
-		System.out.println(fileName1);
+		ArrayList<Cliente> listado = new ArrayList<Cliente>();		
+		
 		File fichero = new File(fileName1); 
 		String dato;
 		
@@ -29,17 +29,19 @@ public List<Cliente> cargarDatos(String fileName1) {
 				String apellido = listaClientes[2];
 				String anioschar = listaClientes[3];
 				int aniosint = Character.getNumericValue(anioschar.charAt(0));
-				CategoriaEnum estado = CategoriaEnum.valueOf(listaClientes[4]);				
+				CategoriaEnum estado = CategoriaEnum.valueOf(listaClientes[4].toUpperCase());		
+				
+				clienteServicio.agregarCliente(run, nombre, apellido, aniosint, estado); 
+				
 				listado.add(new Cliente(run, nombre, apellido, aniosint, estado));
 			}
 			System.out.println("Cargando datos...");
-			System.out.println(listado);
 			lector.close();
 			}
 		catch(Exception e){
 			System.out.println("Error" + e.getMessage());
 		}
-		return listado;
+
 	}
 	
 	@Override

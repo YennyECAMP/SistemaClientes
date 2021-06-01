@@ -1,8 +1,6 @@
 package vista;
 
-
 import java.util.ArrayList;
-//import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +20,7 @@ public class Menu {
 	String fileName1 = "DBClientes.csv";
 	Scanner sc = new Scanner(System.in);
 
-	public void iniciarMenu() {
+	public void iniciarMenu() {	//Lista el menú principal
 		List<String> opcionesMenu = new ArrayList<String>();
 		opcionesMenu.add("Listar Clientes");
 		opcionesMenu.add("Agregar Cliente");
@@ -31,10 +29,10 @@ public class Menu {
 		opcionesMenu.add("Exportar Datos");
 		opcionesMenu.add("Salir");
 		Menu menu = new Menu();
-		menu.seleccionOpcion(opcionesMenu);
+		menu.seleccionarOpcion(opcionesMenu);
 	}
 
-	protected int construirMenu(List<String> pOpcionesMenu) {
+	protected int crearMenu(List<String> pOpcionesMenu) { //Despliega el menú ppal. en la consola y devuelve la selección del usuario
 		List<String> opcionesMenu = pOpcionesMenu;
 		int largo = opcionesMenu.size();
 		for (int i = 0; i < largo; i++) {
@@ -53,16 +51,14 @@ public class Menu {
 		return opcion;
 	}
 
-	public void seleccionOpcion(List<String> pOpcionesMenu) {
+	public void seleccionarOpcion(List<String> pOpcionesMenu) { //selecciona la opcíon solicitada por el usuario
 		boolean salir = false;
 		int resultado;
 		do {
-			resultado = construirMenu(pOpcionesMenu);
+			resultado = crearMenu(pOpcionesMenu);
 			switch (resultado) {
-
 			case 1:
 				listarCliente();
-
 				break;
 			case 2:
 				agregarCliente();
@@ -85,21 +81,20 @@ public class Menu {
 			} while (!salir);
 		}
 
-	private void terminarPrograma() {
+	private void terminarPrograma() {	//Salida del sistema
 		System.out.println("Abandonando el sistema de clientes...");
 		Utilidad.timeToWait();
 		System.out.println("Acaba de salir del sistema");
+		System.out.println("Somos los mejores!!! Equipo 2:  Linda, Yenny y Anibal :)");
 		Utilidad.stopAndContinue();
 		System.exit(0);
 	}
 	
-	private void listarCliente() {
+	private void listarCliente() { //llama al método para listar los clientes
 		clienteServicio.listarClientes();
-		//System.out.println("Pulse cualquier tecla para continuar...");
-		//String espera=sc.nextLine();	
 	}
 	
-	private void agregarCliente() {
+	private void agregarCliente() { //llama al método agregarCliente pasándo los datos a crear del cliente
 		System.out.println( "-------------Crear Cliente-------------");
 		System.out.println();
 		sc.nextLine();
@@ -110,19 +105,20 @@ public class Menu {
 		System.out.println( "Ingresa Apellido del Cliente:" );
 		String ApeCli = sc.nextLine();
 		System.out.println( "Ingresa Años del Cliente:" );
-		/*try {//ojo controlar año numerico
-			
-						
+
+		try {
+			int anioCli = Integer.parseInt(sc.next());
+			clienteServicio.agregarCliente(runCli, nombCli, ApeCli, anioCli, CategoriaEnum.ACTIVO);
+
 		}catch(Exception e) {
-			System.out.println("Error: El año del cliente debe ser numérico");
-			System.out.println();			
-		}*/
-		int anioCli = sc.nextInt();
-		clienteServicio.agregarCliente(runCli, nombCli, ApeCli, anioCli);
+			System.out.println("Error: Años del cliente debe ser numérico");
+			System.out.println();           
+		}
+
 		Utilidad.stopAndContinue();
 	}
 	
-	private void editarCliente() {
+	private void editarCliente() { //llama método para modificar clientes
 		int control = 0;
 		
 		subMenuEditar();
@@ -132,17 +128,18 @@ public class Menu {
 		String runCli = sc.nextLine();
 		List<Cliente> listaClientes = clienteServicio.getListaClientes();
 		if (listaClientes != null) {
-			for (Cliente cliente : listaClientes) {
-				control = 1;
+			for (Cliente cliente : listaClientes) {				
 				if (cliente.getRunCliente().equals(runCli)){
+					control = 1;
 					if (opcionEdicion == 1) {	//cambia estado del cliente
 						subMenuEditarEstadoCliente(cliente);
 						int opcionEdicion2 = sc.nextInt();
 						sc.nextLine();
 						if (opcionEdicion2 == 1) {							
-							//clienteServicio.editarCategoria(CategoriaEnum.Inactivo);
-							cliente.setNombreCategoria( ((cliente.getNombreCategoria() == CategoriaEnum.Activo) ? CategoriaEnum.Inactivo : CategoriaEnum.Activo));
+							CategoriaEnum estado = ((cliente.getNombreCategoria() == CategoriaEnum.ACTIVO) ? CategoriaEnum.INACTIVO : CategoriaEnum.ACTIVO);							
+							clienteServicio.editarCliente(cliente, "", "", "", -1,estado);
 							System.out.println("Estado del Cliente actualizado");
+							estado = null;
 							Utilidad.stopAndContinue();
 						}else {
 							System.out.println("No hay cambios para el cliente");
@@ -151,10 +148,8 @@ public class Menu {
 					}else {						//cambia datos del cliente
 						actualizarDatosCliente(cliente);
 					}
-				}else {
-					//System.out.println("Cliente no existe. Imposible editar");
-					//Utilidad.stopAndContinue();
-					control = 0;
+				//}else {
+					//control = 0;
 				}
 			}
 			if (control == 0) {
@@ -167,7 +162,7 @@ public class Menu {
 		}	
 	}
 	
-	private void subMenuEditar() {
+	private void subMenuEditar() { //subMenú de la opción Editar datos del Cliente
 		System.out.println();
 		System.out.println("-------------Editar Cliente-------------");
 		System.out.println("Seleccione que desea hacer:");
@@ -177,18 +172,18 @@ public class Menu {
 		System.out.println("----------------------------------------");
 	}
 	
-	private void subMenuEditarEstadoCliente(Cliente cliente) {
+	private void subMenuEditarEstadoCliente(Cliente cliente) { //sunMenú de la opción editar Estado del Cliente
 		System.out.println();
 		System.out.println("-----Actualizando estado del Cliente----");
 		System.out.println("El estado actual es:" + cliente.getNombreCategoria());
-		System.out.println("1.-Si desea cambiar el estado del Cliente a " + ((cliente.getNombreCategoria() == CategoriaEnum.Activo) ? CategoriaEnum.Inactivo : CategoriaEnum.Activo) );
+		System.out.println("1.-Si desea cambiar el estado del Cliente a " + ((cliente.getNombreCategoria() == CategoriaEnum.ACTIVO) ? CategoriaEnum.INACTIVO : CategoriaEnum.ACTIVO) );
 		System.out.println("2.-Si desea mantener el estado del cliente " + cliente.getNombreCategoria());
 		System.out.println();
 		System.out.println("Ingrese una opción:");
 		System.out.println("----------------------------------------");	
 	}	
 	
-	private void actualizarDatosCliente(Cliente cliente) {
+	private void actualizarDatosCliente(Cliente cliente) { //método para actualizar Cliente
 		System.out.println("----Actualizando datos del Cliente-----");
 		System.out.println();
 		System.out.println("1.-El RUN del Cliente es: " + cliente.getRunCliente());
@@ -208,37 +203,48 @@ public class Menu {
 			System.out.println("1.-Ingrese el nuevo RUN del Cliente: ");
 			String runCli = sc.nextLine();
 			cliente.setRunCliente(runCli);
+			clienteServicio.editarCliente(cliente, runCli, "", "", -1, null);
 			System.out.println("----------------------------------------");
 			System.out.println("Datos cambiados con éxito");
+			runCli="";
 			break;	
 		case 2:
 			System.out.println("2.-Ingrese el nuevo NOMBRE del Cliente: ");
 			String nombCli = sc.nextLine();
-			cliente.setNombreCliente(nombCli);		
+			clienteServicio.editarCliente(cliente, "", nombCli, "", 0,null);		
 			System.out.println("----------------------------------------");
 			System.out.println("Datos cambiados con éxito");
+			nombCli="";
 			break;
 		case 3:
 			System.out.println("3.-Ingrese el nuevo APELLIDO del Cliente: ");
 			String apeCli = sc.nextLine();
-			cliente.setApellidoCliente(apeCli);
+			clienteServicio.editarCliente(cliente, "", "", apeCli, 0,null);
 			System.out.println("----------------------------------------");
 			System.out.println("Datos cambiados con éxito");
+			apeCli="";
 			break;
 		case 4:
 			System.out.println("4.-Ingrese el nuevo AÑO del Cliente: ");
 			int anioCli = sc.nextInt();
-			cliente.setAniosCliente(anioCli);	
+			
+			if (anioCli>=0) {
+				clienteServicio.editarCliente(cliente, "", "", "", anioCli,null);	
+			}else {
+				System.out.println("El año debe ser numérico");
+			}
+			
 			System.out.println("----------------------------------------");
 			System.out.println("Datos cambiados con éxito");
+			anioCli=-1;
 			break;
 		default:
-				System.out.println("Usted marco una opción incorrecta");
+			System.out.println("Usted marco una opción incorrecta");
 		}
 		Utilidad.stopAndContinue();
 	}
 	
-	private void importarDatos() {
+	private void importarDatos() { //llama al método para cargar datos
 		System.out.println("---------Cargar Datos en Windows---------------");
 		System.out.println();
 		System.out.println("Ingresa la ruta en donde se encuentra el archivo DBClientes.csv:");
@@ -247,12 +253,12 @@ public class Menu {
 
 		System.out.println("----------------------------------------");
 		ArchivoServicio archivoServicio = new ArchivoServicio();
-		archivoServicio.cargarDatos(rutaDir + "/" + fileName1);
+		archivoServicio.cargarDatos(rutaDir + "/" + fileName1, clienteServicio);
 		System.out.println("Datos cargados correctamente en la lista");
 		Utilidad.stopAndContinue();
 	}
 	
-	private void exportarDatos() {
+	private void exportarDatos() { //llama al método para exportar datos
 		//ojo controlar que existan clientes a exportar
 		System.out.println("---------Exportar Datos-----------");
 		System.out.println("Seleccione el formato a exportar:");
@@ -260,11 +266,9 @@ public class Menu {
 		System.out.println("2.-Formato txt");
 		System.out.println();
 		System.out.println("Ingrese una opción para exportar:");
-		
-		int opcionExportar = sc.nextInt();
-		
 		sc.nextLine();
-		System.out.println("----------------------------------");
+		int opcionExportar = sc.nextInt();		
+		
 		System.out.println();
 		System.out.println("---------Exportar Datos en Windows---------------");
 		
@@ -276,7 +280,6 @@ public class Menu {
 			rutaDir = sc.nextLine();
 			ExportadorCsv exportarCsv = new ExportadorCsv();
 			exportarCsv.Exportar(rutaDir + "/" + "clientes.csv", clienteServicio.getListaClientes());
-			//System.out.println("Datos de clientes exportados correctamente en formato csv.");
 			break;	
 		case 2://txt
 			System.out.println("Ingresa la ruta en donde desea exportar el archivo clientes.txt:");
@@ -284,7 +287,6 @@ public class Menu {
 			rutaDir = sc.nextLine();
 			ExportadorTxt exportarTxt = new ExportadorTxt();
 			exportarTxt.Exportar(rutaDir + "/" + "clientes.txt", clienteServicio.getListaClientes());
-			//System.out.println("Datos de clientes exportados correctamente en formato txt.");
 			break;		
 		default:
 			System.out.println("Usted marco una opción incorrecta");

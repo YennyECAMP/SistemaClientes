@@ -8,6 +8,7 @@ import java.util.List;
 
 import modelo.Cliente;
 
+//Clase ExportadorTxt exporta a .txt hereda de Exportador
 public class ExportadorTxt extends Exportador{
 
 	@Override
